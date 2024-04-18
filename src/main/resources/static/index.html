@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>Kino</title>
+    <script src="index.js"></script>
+</head>
+<body>
+<h1>BESTILLING AV KINOBILLETTER</h1>
+<form>
+    <select id="movieSelect">
+        <label>Select a movie</label>
+        <option value="0">Select movie:</option>
+        <option value="1">1. Wonka</option>
+        <option value="2">2. DUNE: Part Two</option>
+        <option value="3">3. Perfect Days</option>
+    </select>
+    <span id="invalidChoice" style="color:red"></span>
+    <!-- For any other project i would have used css for styling these elements, but since the assignment only asked for html, js and readme, i have done it here. -->
+    <!-- I am aware that this goes against the guidelines for best practice. -->
+    <br><br>
+    <table>
+        <tr>
+            <td>Number of tickets:</td>
+            <td><input type="number" id="number" name="tickets" size="2"/></td>
+            <td id="invalidNumber" style="color:red"></td>
+        </tr>
+        <tr>
+            <td>First Name:</td>
+            <td><input type="text" id="fname" name="first"/></td>
+            <td id="invalidFirstName" style="color:red"></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input type="text" id="lname" name="last"/></td>
+            <td id="invalidLastName" style="color:red"></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" id="email" name="email"/></td>
+            <td id="invalidEmail" style="color:red"></td>
+        </tr>
+        <tr>
+            <td>Phonenumber:</td>
+            <td><input type="text" id="phone" name="number"/></td>
+            <td id="invalidPhone" style="color:red"></td>
+        </tr>
+    </table>
+</form>
+<br><br>
+<!--I have sourced the content of the <form> element from w3schools tutorial on html  -->
+<button onclick="buyTicket()">
+    Buy Ticket(s)
+</button>
+<br><br>
+<p>All tickets:</p>
+<div id="ticketTable"></div>
+<br><br>
+<button onclick="dropTable()">Delete tickets</button>
+</body>
+</html>
