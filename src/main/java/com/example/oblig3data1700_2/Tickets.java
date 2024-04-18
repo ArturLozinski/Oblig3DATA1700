@@ -1,4 +1,4 @@
-package com.example.oblig3_data1700;
+package com.example.oblig3data1700_2;
 
 public class Tickets {
     private String movie;

@@ -1,13 +1,7 @@
-package com.example.oblig3_data1700;
-
-package com.example.obligatorisk;
+package com.example.oblig3data1700_2;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 public class TicketRepository {
     @Autowired
