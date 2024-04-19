@@ -16,8 +16,7 @@
         <option value="3">3. Perfect Days</option>
     </select>
     <span id="invalidChoice" style="color:red"></span>
-    <!-- For any other project i would have used css for styling these elements, but since the assignment only asked for html, js and readme, i have done it here. -->
-    <!-- I am aware that this goes against the guidelines for best practice. -->
+
     <br><br>
     <table>
         <tr>
@@ -53,9 +52,10 @@
     Buy Ticket(s)
 </button>
 <br><br>
-<p>All tickets:</p>
-<div id="ticketTable"></div>
-<br><br>
-<button onclick="dropTable()">Delete tickets</button>
-</body>
-</html>
+<div class="col-md-8">
+    <div id="alle">
+        <h2>Alle billetter</h2>
+    </div>
+    <div id="billetter" class="table-responsive"></div>
+    <button class="btn btn-danger rounded-pill px-3" onclick="slettAlle()">Slett alle billetter</button>
+</div>

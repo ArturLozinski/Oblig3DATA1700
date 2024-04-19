@@ -8,7 +8,6 @@ function buyTicket() {
     let last_name = document.getElementById("lname").value;
     let email = document.getElementById("email").value;
     let phone = document.getElementById("phone").value;
-
     let errorMessage = false;
 
     if (movie === "0") {

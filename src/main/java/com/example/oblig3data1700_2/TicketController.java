@@ -6,23 +6,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import java.util.List;
+
+
 @RestController
 public class TicketController {
     @Autowired
-    ticketRepository rep;
+    TicketRepository rep;
 
     @PostMapping("/save")
-    public void save(tickets ticket) {
+    public void saveTickets(Tickets ticket) {
         rep.saveTickets(ticket);
     }
 
     @GetMapping("/getAll")
-    public List<tickets> getAll() {
+    public List<Tickets> getAllTickets() {
         return rep.getAllTickets();
     }
 
     @DeleteMapping("/deleteAll")
-    public void deleteAll() {
+    public void deleteAllTickets() {
         rep.deleteAllTickets();
     }
 
