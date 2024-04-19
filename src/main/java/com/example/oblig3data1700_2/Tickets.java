@@ -2,13 +2,17 @@ package com.example.oblig3data1700_2;
 
 public class Tickets {
     private String movie;
-    private String numberOfTickets;
+    private int numberOfTickets;
     private String fname;
     private String lname;
     private String email;
     private String phone;
 
-    public Tickets(String movie, String numberOfTickets, String fname, String lname, String email, String phone) {
+    public Tickets(){
+
+    }
+
+    public Tickets(String movie, int numberOfTickets, String fname, String lname, String email, String phone) {
         this.movie = movie;
         this.numberOfTickets = numberOfTickets;
         this.fname = fname;
@@ -25,11 +29,11 @@ public class Tickets {
         this.movie = movie;
     }
 
-    public String getNumberOfTickets() {
+    public int getNumberOfTickets() {
         return numberOfTickets;
     }
 
-    public void setNumberOfTickets(String numberOfTickets) {
+    public void setNumberOfTickets(int numberOfTickets) {
         this.numberOfTickets = numberOfTickets;
     }
 

@@ -14,7 +14,7 @@ public class TicketRepository {
     private JdbcTemplate db;
 
     public void saveTickets(Tickets inTickets) {
-        String sql = "INSERT INTO tickets (movie, numberOfTickets, fname, lname, email, phone) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO Tickets (movie, numberOfTickets, fname, lname, email, phone) VALUES(?,?,?,?,?,?)";
         db.update(sql,
                 inTickets.getMovie(),
                 inTickets.getNumberOfTickets(),
@@ -25,9 +25,9 @@ public class TicketRepository {
     }
 
     public List<Tickets> getAllTickets() {
-        String sql = "SELECT * FROM Tickets ORDER BY lname";
-        List<Tickets> alleBilletter = db.query(sql, new BeanPropertyRowMapper(Tickets.class));
-        return alleBilletter;
+        String sql = "SELECT * FROM Tickets";
+        List<Tickets> allTickets = db.query(sql, new BeanPropertyRowMapper<>(Tickets.class));
+        return allTickets;
     }
 
     public void deleteAllTickets() {

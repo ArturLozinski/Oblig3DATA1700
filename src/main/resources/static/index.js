@@ -49,11 +49,23 @@ function buyTicket() {
             email: email,
             phone: phone
         }
-        console.log(ticketInput);
-        ticketArray.push(ticketInput);
-        displayTicketTable();
-        clearInput();
-        clearErrorMessages();
+        $.ajax({
+            url: '/save',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(ticketInput),
+            success: function() {
+                // On success, clear the input fields and error messages
+                clearInput();
+                clearErrorMessages();
+                // And update the ticket table
+                displayTicketTable();
+            },
+            error: function(error) {
+                // handle error
+                console.log('Error: ', error);
+            }
+        });
     }
 }
 
@@ -75,7 +87,7 @@ function validEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-// Phone validation function that can also start with a + sign for country code and a international standard maximum of 15 characters.
+// Phone validation function that can also start with a + sign for country code and an international standard maximum of 15 characters.
 // Checked with regexr.com
 function validPhone(phone) {
     let re = /^\+?[0-9]{8,15}$/; // Sourced from https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s03.html
@@ -105,7 +117,10 @@ function displayTicketTable() {
             "<td>" + p.phone + "</td>";
         out += "</tr>";
     }
+    console.log(out)
     document.getElementById("ticketTable").innerHTML = out;
+
+
 }
 
 function clearErrorMessages() {
