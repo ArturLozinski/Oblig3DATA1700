@@ -3,9 +3,9 @@ let ticketArray = [];
 function buyTicket() {
 
     let movie = document.getElementById("movieSelect").value;
-    let tickets = document.getElementById("number").value;
-    let first_name = document.getElementById("fname").value;
-    let last_name = document.getElementById("lname").value;
+    let numberOfTickets = document.getElementById("number").value;
+    let fname = document.getElementById("fname").value;
+    let lname = document.getElementById("lname").value;
     let email = document.getElementById("email").value;
     let phone = document.getElementById("phone").value;
     let errorMessage = false;
@@ -15,17 +15,17 @@ function buyTicket() {
         errorMessage = true;
     }
 
-    if (tickets === null || tickets <= 0) {
+    if (numberOfTickets === null || numberOfTickets <= 0) {
         document.getElementById("invalidNumber").innerHTML = "Please enter a valid amount of tickets";
         errorMessage = true;
     }
     // The following if-statements refer to the regex functions defined further below.
-    if (!validFirstName(first_name)) {
+    if (!validFirstName(fname)) {
         document.getElementById("invalidFirstName").innerHTML = "Please fill out your first name, 3-20 alphabetical characters";
         errorMessage = true;
     }
 
-    if (!validLastName(last_name)) {
+    if (!validLastName(lname)) {
         document.getElementById("invalidLastName").innerHTML = "Please fill out your last name, 3-20 alphabetical characters";
         errorMessage = true;
     }
@@ -43,25 +43,28 @@ function buyTicket() {
     if (!errorMessage) {
         let ticketInput = {
             movie: movie,
-            tickets: tickets,
-            first_name: first_name,
-            last_name: last_name,
+            numberOfTickets: numberOfTickets,
+            fname: fname,
+            lname: lname,
             email: email,
             phone: phone
         }
+        $.post("/save", ticketInput, function () {
+            getAll()
+        });
         $.ajax({
             url: '/save',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(ticketInput),
-            success: function() {
+            success: function () {
                 // On success, clear the input fields and error messages
                 clearInput();
                 clearErrorMessages();
                 // And update the ticket table
                 displayTicketTable();
             },
-            error: function(error) {
+            error: function (error) {
                 // handle error
                 console.log('Error: ', error);
             }
@@ -94,6 +97,12 @@ function validPhone(phone) {
     return re.test(phone);
 }
 
+function getAll() {
+    $.get("/getAll", function (Tickets) {
+        displayTicketTable(Tickets);
+    });
+}
+
 function clearInput() {
     document.getElementById("movieSelect").value = "0";
     document.getElementById("number").value = "";
@@ -103,24 +112,26 @@ function clearInput() {
     document.getElementById("phone").value = "";
 }
 
-function displayTicketTable() {
-    let out = "<table><tr>" +
+
+function displayTicketTable(ticket) {
+    let out = "<table class='table table-striped'><tr>" + "<th>ID</th>" +
         "<th>Movie</th><th>Tickets</th><th>First name</th><th>Last name</th><th>E-Mail</th><th>Phonenumber</th>" +
         "</tr>";
-    for (let p of ticketArray) {
+    for (let p of ticket) {
         out += "<tr>";
-        out += "<td>" + p.movie + "</td>" +
-            "<td>" + p.tickets + "</td>" +
-            "<td>" + p.first_name + "</td>" +
-            "<td>" + p.last_name + "</td>" +
+        out += "<td>" + p.id + "</td>" +
+            "<td>" + p.movie + "</td>" +
+            "<td>" + p.numberOfTickets + "</td>" +
+            "<td>" + p.fname + "</td>" +
+            "<td>" + p.lname + "</td>" +
             "<td>" + p.email + "</td>" +
             "<td>" + p.phone + "</td>";
         out += "</tr>";
     }
+    clearErrorMessages();
+    clearInput();
     console.log(out)
     document.getElementById("ticketTable").innerHTML = out;
-
-
 }
 
 function clearErrorMessages() {
@@ -132,7 +143,18 @@ function clearErrorMessages() {
     document.getElementById("invalidPhone").innerHTML = "";
 }
 
-function dropTable() {
-    ticketArray = [];
-    displayTicketTable()
+function deleteAllTickets() {
+    $.ajax({
+        url: "/deleteAll",
+        type: "DELETE",
+        success: function () {
+            $("#ticketTable").html("");
+            $("#movie").val("");
+            $("#numberOfTickets").val("");
+            $("#fname").val("");
+            $("#lname").val("");
+            $("#email").val("");
+            $("#phone").val("");
+        }
+    });
 }
