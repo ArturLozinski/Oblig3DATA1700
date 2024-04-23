@@ -2,43 +2,45 @@ package com.example.oblig3data1700_2;
 
 public class Tickets {
     private String movie;
-    private int numberOfTickets;
+    private String numberOfTickets;
     private String fname;
     private String lname;
     private String email;
     private String phone;
+    private int id;
 
     public Tickets(){
 
     }
 
-    public Tickets(String movie, int numberOfTickets, String fname, String lname, String email, String phone) {
+    public Tickets(String movie, String numberOfTickets, String fname, String lname, String email, String phone, int id) {
         this.movie = movie;
         this.numberOfTickets = numberOfTickets;
         this.fname = fname;
         this.lname = lname;
         this.email = email;
         this.phone = phone;
+        this.id = id;
     }
 
     public String getMovie() {
-        return movie;
+        return this.movie;
     }
 
     public void setMovie(String movie) {
         this.movie = movie;
     }
 
-    public int getNumberOfTickets() {
-        return numberOfTickets;
+    public String getNumberOfTickets() {
+        return this.numberOfTickets;
     }
 
-    public void setNumberOfTickets(int numberOfTickets) {
+    public void setNumberOfTickets(String numberOfTickets) {
         this.numberOfTickets = numberOfTickets;
     }
 
     public String getFname() {
-        return fname;
+        return this.fname;
     }
 
     public void setFname(String fname) {
@@ -46,7 +48,7 @@ public class Tickets {
     }
 
     public String getLname() {
-        return lname;
+        return this.lname;
     }
 
     public void setLname(String lname) {
@@ -54,7 +56,7 @@ public class Tickets {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -62,10 +64,18 @@ public class Tickets {
     }
 
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

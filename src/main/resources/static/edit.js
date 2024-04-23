@@ -1,7 +1,19 @@
-let ticketArray = [];
+$(function () {
+    const id = window.location.search.substring(1);
+    const url = "/getOneTicket?" + id;
+    $.get(url, function (inTickets) {
+        $("#id").val(inTickets.id),
+            $("#movie").val(inTickets.movie),
+            $("#numberOfTickets").val(inTickets.numberOfTickets),
+            $("#fname").val(inTickets.fname),
+            $("#lname").val(inTickets.lname),
+            $("#email").val(inTickets.email),
+            $("#phone").val(inTickets.phone);
+    });
+});
 
-function buyTicket() {
-    console.log("bögelibög")
+function editTicket(ticket) {
+    localStorage.setItem('ticket', JSON.stringify(ticket));
     let movie = document.getElementById("movieSelect").value;
     let numberOfTickets = document.getElementById("number").value;
     let fname = document.getElementById("fname").value;
@@ -52,24 +64,26 @@ function buyTicket() {
 
         console.log('ticketInput ', ticketInput);
         $.ajax({
-            url: '/save',
+            url: '/editTicket',
             type: 'POST',
-            async: true,
             contentType: 'application/json',
-            data: JSON.stringify(ticketInput),
-
-        }).then((x) => {
-            console.log('ok response: ', x);
-            clearInput();
-            clearErrorMessages();
-            getAll();
-        }).catch((err) => {
-            console.log('Error: ', err);
+            data: JSON.stringify({
+                // Your data here
+            }),
+            success: function() {
+                // Redirect to index.html
+                window.location.href = "index.html";
+                getAll();
+                displayTicketTable();
+            },
+            error: function(error) {
+                // Handle error
+                console.log('Error: ', error);
+            }
         });
     }
 }
 
-// regex for name validation seemed imperative
 function validFirstName(fname) {
     let re = /^([a-zæøåA-ZÆØÅ]{3,20})$/;
     return re.test(fname);
@@ -80,8 +94,6 @@ function validLastName(lname) {
     return re.test(lname);
 }
 
-// Email validation function
-// Checked with regexr.com
 function validEmail(email) {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -118,33 +130,8 @@ function clearInput() {
     document.getElementById("lname").value = "";
     document.getElementById("email").value = "";
     document.getElementById("phone").value = "";
+
 }
-
-
-function displayTicketTable(ticket) {
-    let out = "<table class='table table-striped'><tr>" +
-        "<th>Movie</th><th>Tickets</th><th>First name</th><th>Last name</th><th>E-Mail</th><th>Phonenumber</th>" +
-        "</tr>";
-        for (let p of ticket) {
-            out += "<tr>";
-            out +=
-                "<td>" + p.movie + "</td>" +
-                "<td>" + p.numberOfTickets + "</td>" +
-                "<td>" + p.fname + "</td>" +
-                "<td>" + p.lname + "</td>" +
-                "<td>" + p.email + "</td>" +
-                "<td>" + p.phone + "</td>" +
-                "<td><a class='btn btn-primary' href='editTicket.html?id=" + p.id + "'> Edit </a></td>" +
-                "<td><button class='btn btn-danger' onclick='deleteOne(" + p.id + ")'> Delete </td>";
-            out += "</tr>";
-        }
-
-    clearErrorMessages();
-    clearInput();
-    console.log(out)
-    document.getElementById("ticketTable").innerHTML = out;
-}
-
 function clearErrorMessages() {
     document.getElementById("invalidChoice").innerHTML = "";
     document.getElementById("invalidNumber").innerHTML = "";
@@ -152,26 +139,4 @@ function clearErrorMessages() {
     document.getElementById("invalidLastName").innerHTML = "";
     document.getElementById("invalidEmail").innerHTML = "";
     document.getElementById("invalidPhone").innerHTML = "";
-}
-
-function deleteAllTickets() {
-    $.ajax({
-        url: "/deleteAll",
-        type: "DELETE",
-        success: function () {
-            $("#ticketTable").html("");
-            $("#movie").val("");
-            $("#numberOfTickets").val("");
-            $("#fname").val("");
-            $("#lname").val("");
-            $("#email").val("");
-            $("#phone").val("");
-        }
-    });
-}
-function deleteOne(id) {
-    const url = "/deleteOne?id=" + id;
-    $.get(url, function () {
-        getAll();
-    });
 }

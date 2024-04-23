@@ -13,13 +13,31 @@ public class TicketController {
     TicketRepository rep;
 
     @PostMapping("/save")
-    public void saveTickets(Tickets ticket) {
+    public void saveTickets(@RequestBody Tickets ticket) {
+        System.out.println(ticket);
         rep.saveTickets(ticket);
     }
 
+
     @GetMapping("/getAll")
     public List<Tickets> getAllTickets() {
+
         return rep.getAllTickets();
+    }
+
+    @GetMapping("/getOneTicket")
+    public Tickets getOneTicket(Integer id) {
+        return rep.getOneTicket(id);
+    }
+
+    @PostMapping("/editTicket")
+    public void editTicketd(Tickets inTickets) {
+        rep.editTicket(inTickets);
+    }
+
+    @GetMapping("/deleteOne")
+    public void deleteOne(Integer id) {
+        rep.deleteOne(id);
     }
 
     @DeleteMapping("/deleteAll")
