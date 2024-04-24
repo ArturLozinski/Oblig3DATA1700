@@ -1,3 +1,6 @@
+$(function() {
+    getAll()
+});
 let ticketArray = [];
 
 function buyTicket() {

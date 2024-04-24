@@ -52,12 +52,14 @@ public class TicketRepository {
                 inTickets.getFname(),
                 inTickets.getLname(),
                 inTickets.getEmail(),
-                inTickets.getPhone());
+                inTickets.getPhone(),
+                inTickets.getId());
     }
     public void deleteOne(Integer id) {
         String sql = "DELETE FROM Tickets WHERE id=?";
-        db.update(sql);
+        db.update(sql,id);
     }
+
 
     public void deleteAllTickets() {
         String sql = "DELETE FROM Tickets";

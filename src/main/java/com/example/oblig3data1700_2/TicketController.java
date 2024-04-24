@@ -31,8 +31,8 @@ public class TicketController {
     }
 
     @PostMapping("/editTicket")
-    public void editTicketd(Tickets inTickets) {
-        rep.editTicket(inTickets);
+    public void editTicket(@RequestBody Tickets ticket) {
+        rep.editTicket(ticket);
     }
 
     @GetMapping("/deleteOne")

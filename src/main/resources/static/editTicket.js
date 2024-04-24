@@ -1,18 +1,19 @@
 $(function () {
-    const id = window.location.search.substring(1);
-    const url = "/getOneTicket?" + id;
-    $.get(url, function (inTickets) {
-        $("#id").val(inTickets.id),
-            $("#movie").val(inTickets.movie),
-            $("#numberOfTickets").val(inTickets.numberOfTickets),
-            $("#fname").val(inTickets.fname),
-            $("#lname").val(inTickets.lname),
-            $("#email").val(inTickets.email),
-            $("#phone").val(inTickets.phone);
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id'); // get id from URL
+    const url = "/getOneTicket?id=" + id;
+    $.get(url, function (ticket) {
+        $("#movieSelect").val(ticket.movie),
+            $("#number").val(ticket.numberOfTickets),
+            $("#fname").val(ticket.fname),
+            $("#lname").val(ticket.lname),
+            $("#email").val(ticket.email),
+            $("#phone").val(ticket.phone);
     });
 });
 
 function editTicket(ticket) {
+    console.log("wtf is going on here")
     localStorage.setItem('ticket', JSON.stringify(ticket));
     let movie = document.getElementById("movieSelect").value;
     let numberOfTickets = document.getElementById("number").value;
@@ -67,17 +68,11 @@ function editTicket(ticket) {
             url: '/editTicket',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({
-                // Your data here
-            }),
+            data: JSON.stringify(ticketInput),
             success: function() {
-                // Redirect to index.html
                 window.location.href = "index.html";
-                getAll();
-                displayTicketTable();
             },
             error: function(error) {
-                // Handle error
                 console.log('Error: ', error);
             }
         });
@@ -114,29 +109,11 @@ function getAll() {
         contentType: 'application/json',
         success: function (response) {
             console.log('ALL THE FILMS ', response);
-            displayTicketTable(response);
+            //displayTicketTable(response);
         },
         error: function (error) {
             console.log('Error: ', error);
         }
     });
-
 }
 
-function clearInput() {
-    document.getElementById("movieSelect").value = "0";
-    document.getElementById("number").value = "";
-    document.getElementById("fname").value = "";
-    document.getElementById("lname").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("phone").value = "";
-
-}
-function clearErrorMessages() {
-    document.getElementById("invalidChoice").innerHTML = "";
-    document.getElementById("invalidNumber").innerHTML = "";
-    document.getElementById("invalidFirstName").innerHTML = "";
-    document.getElementById("invalidLastName").innerHTML = "";
-    document.getElementById("invalidEmail").innerHTML = "";
-    document.getElementById("invalidPhone").innerHTML = "";
-}
