@@ -4,7 +4,7 @@ $(function() {
 let ticketArray = [];
 
 function buyTicket() {
-    console.log("bögelibög")
+    console.log("buying ticket")
     let movie = document.getElementById("movieSelect").value;
     let numberOfTickets = document.getElementById("number").value;
     let fname = document.getElementById("fname").value;
@@ -61,7 +61,7 @@ function buyTicket() {
             contentType: 'application/json',
             data: JSON.stringify(ticketInput),
 
-        }).then((x) => {
+        }).then((x) => { //Generic ajax function did not do the trick
             console.log('ok response: ', x);
             clearInput();
             clearErrorMessages();
@@ -125,8 +125,8 @@ function clearInput() {
 
 
 function displayTicketTable(ticket) {
-    let out = "<table class='table table-striped'><tr>" +
-        "<th>Movie</th><th>Tickets</th><th>First name</th><th>Last name</th><th>E-Mail</th><th>Phonenumber</th>" +
+    let out = "<table class='table table-striped table-hover'><thead class='thead-dark'><tr>" +
+        "<th>Movie</th><th>Tickets</th><th>First name</th><th>Last name</th><th>E-Mail</th><th>Phonenumber</th>" + "</thead>" +
         "</tr>";
         for (let p of ticket) {
             out += "<tr>";
@@ -137,8 +137,8 @@ function displayTicketTable(ticket) {
                 "<td>" + p.lname + "</td>" +
                 "<td>" + p.email + "</td>" +
                 "<td>" + p.phone + "</td>" +
-                "<td><a class='btn btn-primary' href='editTicket.html?id=" + p.id + "'> Edit </a></td>" +
-                "<td><button class='btn btn-danger' onclick='deleteOne(" + p.id + ")'> Delete </td>";
+                "<td class='hidden-buttons'><a class='btn btn-primary' href='editTicket.html?id=" + p.id + "'> Edit </a></td>" +
+                "<td class='hidden-buttons'><button class='btn btn-danger' onclick='deleteOne(" + p.id + ")'> Delete </td>";
             out += "</tr>";
         }
 

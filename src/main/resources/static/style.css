@@ -1,0 +1,6 @@
+.hidden-buttons .btn {
+    visibility: hidden;
+}
+tr:hover .hidden-buttons .btn {
+    visibility: visible;
+}

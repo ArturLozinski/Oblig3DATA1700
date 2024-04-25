@@ -28,7 +28,7 @@ public class TicketRepository {
     }
 
     public List<Tickets> getAllTickets() {
-        String sql = "SELECT * FROM Tickets";
+        String sql = "SELECT * FROM Tickets ORDER BY lname";
         List<Tickets> allTickets = db.query(sql, new BeanPropertyRowMapper<>(Tickets.class));
         System.out.println(allTickets);
         return allTickets;

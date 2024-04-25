@@ -1,4 +1,4 @@
-$(function () {
+$(function () { //This functions brings in the input from the ticket that i want to edit
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     const url = "/getOneTicket?id=" + id;
@@ -17,8 +17,9 @@ $(function () {
 function editTicket(ticket) {
     console.log("wtf is going on here")
     localStorage.setItem('ticket', JSON.stringify(ticket));
+
     const params = new URLSearchParams(window.location.search);
-    let id = params.get('id');
+    let id = params.get('id'); //This part is vital to ensure that the id does not change to 0 when sending the edited input to backend, without this, the db did not update
     let movie = document.getElementById("movieSelect").value;
     let numberOfTickets = document.getElementById("number").value;
     let fname = document.getElementById("fname").value;
@@ -59,7 +60,7 @@ function editTicket(ticket) {
     // If all the validations above pass, the input gets set
     if (!errorMessage) {
         let ticketInput = {
-            id: id,
+            id: id, //Making sure the id is correct before sending
             movie: movie,
             numberOfTickets: numberOfTickets,
             fname: fname,
