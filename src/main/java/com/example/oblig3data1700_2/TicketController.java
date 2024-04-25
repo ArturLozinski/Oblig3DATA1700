@@ -32,6 +32,8 @@ public class TicketController {
 
     @PostMapping("/editTicket")
     public void editTicket(@RequestBody Tickets ticket) {
+        System.out.println("INPUT: " );
+        System.out.println(ticket.getId());
         rep.editTicket(ticket);
     }
 

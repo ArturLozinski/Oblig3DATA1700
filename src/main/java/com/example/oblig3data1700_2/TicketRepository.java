@@ -46,6 +46,7 @@ public class TicketRepository {
     }
     public void editTicket(Tickets inTickets){
         String sql = "UPDATE Tickets SET movie=?, numberOfTickets=?, fname=?, lname=?, email=?, phone=? WHERE id=?";
+        System.out.println("Ticket ID: " + inTickets.getId());
         db.update(sql,
                 inTickets.getMovie(),
                 inTickets.getNumberOfTickets(),
@@ -55,7 +56,7 @@ public class TicketRepository {
                 inTickets.getPhone(),
                 inTickets.getId());
     }
-    public void deleteOne(Integer id) {
+    public void deleteOne(int id) {
         String sql = "DELETE FROM Tickets WHERE id=?";
         db.update(sql,id);
     }

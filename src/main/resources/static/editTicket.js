@@ -1,8 +1,10 @@
 $(function () {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id'); // get id from URL
+    const id = params.get('id');
     const url = "/getOneTicket?id=" + id;
+    console.log("Ticket id: ", id);
     $.get(url, function (ticket) {
+        $("#id").val(ticket.id),
         $("#movieSelect").val(ticket.movie),
             $("#number").val(ticket.numberOfTickets),
             $("#fname").val(ticket.fname),
@@ -15,6 +17,8 @@ $(function () {
 function editTicket(ticket) {
     console.log("wtf is going on here")
     localStorage.setItem('ticket', JSON.stringify(ticket));
+    const params = new URLSearchParams(window.location.search);
+    let id = params.get('id');
     let movie = document.getElementById("movieSelect").value;
     let numberOfTickets = document.getElementById("number").value;
     let fname = document.getElementById("fname").value;
@@ -55,6 +59,7 @@ function editTicket(ticket) {
     // If all the validations above pass, the input gets set
     if (!errorMessage) {
         let ticketInput = {
+            id: id,
             movie: movie,
             numberOfTickets: numberOfTickets,
             fname: fname,
@@ -66,7 +71,7 @@ function editTicket(ticket) {
         console.log('ticketInput ', ticketInput);
         $.ajax({
             url: '/editTicket',
-            type: 'POST',
+            type: "POST",
             contentType: 'application/json',
             data: JSON.stringify(ticketInput),
             success: function() {
